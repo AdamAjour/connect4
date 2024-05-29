@@ -1,6 +1,10 @@
+require 'rainbow/refinement'
+using Rainbow
+
 Rows = 6
 Columns = 7
 Coin = ["heads" , "tails"]
+GameOver = false
 LetterNum = {
   "A" => 0,
   "B" => 1,
@@ -11,8 +15,13 @@ LetterNum = {
   "G" => 6
 }
 
-Table = Array.new(Rows) { |i| Array.new(Columns) { |i| "0" }}
-one_row = [1, 2, 3, 4, 5, 6, 7]
+red_piece = "█".red
+yellow_piece = "█".blue
+empty_slot = "█"
+
+Table = Array.new(Rows) { |i| Array.new(Columns) { |i| "█" }}
+
+
 def nl()
   print("\n")
 end
@@ -29,6 +38,7 @@ def borders()
   for first_row in 0..55 do
     print("·-")
   end
+  print("·")
   nl()
 end
 
@@ -66,4 +76,13 @@ def initialBoard()
 
 end
 
+def take_input()
+  print("Insert in Column : ")
+  letter = gets.chomp
+end
+
+def insert_piece(column)
+
+end
+take_input()
 initialBoard()
