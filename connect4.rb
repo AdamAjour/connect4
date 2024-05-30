@@ -63,11 +63,11 @@ def switch_player()
 end
 
 def empty_row_no_columns()
-  print("¦")
+  print("█")
   for space_row in 0..6 do
     print("\t\t") 
   end
-  print("¦")
+  print("█")
   nl()
 end
 
@@ -84,23 +84,23 @@ end
 
 def empty_row()
   for space_row in 0..6 do
-    print("¦\t\t") 
+    print("█\t\t") 
   end
-  print("¦")
+  print("█")
   nl()
 end
 
 def borders()
   for first_row in 0..55 do
-    print("·-")
+    print("■■")
   end
-  print("·")
+  print("■")
   nl()
 end
 
 def table_row(index)
-  Table[index].each { |num| print ("¦\t#{num}\t") }
-    print("¦")
+  Table[index].each { |num| print ("█\t#{num}\t") }
+    print("█")
     nl()
 end
 
@@ -108,9 +108,9 @@ def column_banner()
   borders()
   empty_row()
   LetterNum.each do |key,value|
-    print("¦\t#{key}\t")
+    print("█\t#{key}\t")
   end
-  print("¦")
+  print("█")
   nl()
   empty_row()
 end
@@ -132,6 +132,42 @@ def initialBoard()
 
 end
 
+def four_connected(piece)
+  for j in 0..(Rows - 1) do
+    for i in 0..(Columns - 4) do
+      if Table[j][i] == piece && Table[j][i+1] == piece && Table[j][i+2] == piece && Table[j][i+3] == piece
+        return true
+      end
+    end
+  end
+
+  for i in 0..(Columns - 1) do
+    for j in 0..(Rows - 4) do
+      if Table[j][i] == piece && Table[j+1][i] == piece && Table[j+2][i] == piece && Table[j+3][i] == piece
+        return true
+      end
+    end
+  end
+
+  for i in 3..(Columns - 1) do
+    for j in 0..(Rows - 4) do
+      if Table[j][i] == piece && Table[j+1][i-1] == piece && Table[j+2][i-2] == piece && Table[j+3][i-3] == piece
+        return true
+      end
+    end
+  end
+
+  for i in 0..(Columns - 4) do
+    for j in 3..(Rows - 1) do
+      if Table[j][i] == piece && Table[j-1][i+1] == piece && Table[j-2][i+2] == piece && Table[j-3][i+3] == piece
+        return true
+      end
+    end
+  end
+
+  return false
+end
+
 def take_input()
   print("Insert in Column : ")
   letter = gets.chomp
@@ -142,6 +178,10 @@ def take_input()
     full_flag = check_column_full(letter.capitalize)
   end
   insert_piece(PieceArray[@Index.to_i],letter.capitalize)
+  @GameOver = four_connected(PieceArray[@Index.to_i])
+  if (@GameOver)
+    print("The winner is #{@CurrentPlayer}")
+  end
 end
 
 def check_column_full(column)
@@ -170,7 +210,7 @@ end
 
 players_name()
 nl()
-while(!GameOver)
+while(!@GameOver)
   player_banner(@CurrentPlayer)
   initialBoard()
   take_input()
