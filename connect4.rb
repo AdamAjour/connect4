@@ -135,7 +135,21 @@ end
 def take_input()
   print("Insert in Column : ")
   letter = gets.chomp
-  is_column_full = insert_piece(PieceArray[@Index.to_i],letter.capitalize)
+  full_flag = check_column_full(letter.capitalize)
+  while(full_flag) do
+    print("Insert another Column : ")
+    letter = gets.chomp
+    full_flag = check_column_full(letter.capitalize)
+  end
+  insert_piece(PieceArray[@Index.to_i],letter.capitalize)
+end
+
+def check_column_full(column)
+  column_number = LetterNum[column]
+  if Table[0][column_number] != EmptySlot
+    return true
+  end
+  return false
 end
 
 def insert_piece(piece, column)
