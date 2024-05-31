@@ -148,17 +148,17 @@ def four_connected(piece)
     end
   end
 
-  for i in 3..(Columns - 1) do
-    for j in 0..(Rows - 4) do
-      if Table[j][i] == piece && Table[j+1][i-1] == piece && Table[j+2][i-2] == piece && Table[j+3][i-3] == piece
+  for i in 3..(Rows - 1) do
+    for j in 0..(Columns - 4) do
+      if Table[i][j] == piece && Table[i-1][j+1] == piece && Table[i-2][j+2] == piece && Table[i-3][j+3] == piece
         return true
       end
     end
   end
 
-  for i in 0..(Columns - 4) do
-    for j in 3..(Rows - 1) do
-      if Table[j][i] == piece && Table[j-1][i+1] == piece && Table[j-2][i+2] == piece && Table[j-3][i+3] == piece
+  for i in 0..(Rows - 4) do
+    for j in 0..(Columns - 4) do
+      if Table[i][j] == piece && Table[i+1][j+1] == piece && Table[i+2][j+2] == piece && Table[i+3][j+3] == piece
         return true
       end
     end
@@ -179,6 +179,7 @@ def take_input()
   insert_piece(PieceArray[@Index.to_i],letter.capitalize)
   @GameOver = four_connected(PieceArray[@Index.to_i])
   if (@GameOver)
+    initialBoard()
     print("The winner is #{@CurrentPlayer}")
   end
 end
