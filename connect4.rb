@@ -28,8 +28,7 @@ EmptySlot = "█"
 Index = 0
 
 
-Flip = SecureRandom.random_number(2)
-
+@flip = SecureRandom.random_number(2)
 
 
 Table = Array.new(Rows) { |i| Array.new(Columns) { |i| "█" }}
@@ -46,7 +45,7 @@ def players_name()
   print("Player 2 enter your name: ")
   @Player2 = gets.chomp
   @Coin = [@Player1 , @Player2]
-  @CurrentPlayer = @Coin[Flip]
+  @CurrentPlayer = @Coin[@flip]
 end
 
 def player_banner(current_player)
@@ -57,9 +56,9 @@ def player_banner(current_player)
 end
 
 def switch_player()
-  @Flip = (@Flip.to_i + 1) % 2
+  @flip = (@flip.to_i + 1) % 2
   @Index = (@Index.to_i + 1) % 2
-  @CurrentPlayer = @Coin[@Flip]
+  @CurrentPlayer = @Coin[@flip]
 end
 
 def empty_row_no_columns()
